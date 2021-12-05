@@ -5,7 +5,7 @@
 ▫️ 한 프로그램이 네트워크의 세부 정보를 이해하지 않고도 네트워크 안의 다른 컴퓨터에 있는 프로그램에서 서비스를 요청하는 프로토콜
 ```````
 
-<img src="https://user-images.githubusercontent.com/33214969/145026118-4b9feea9-6eb9-41a6-8076-f2d6fd1618f9.jpg" alt="rpc.jpg" style="zoom:50%;" />
+<img src="https://user-images.githubusercontent.com/33214969/145026118-4b9feea9-6eb9-41a6-8076-f2d6fd1618f9.jpg" alt="rpc.jpg" width="50%"/>
 
 + 특징
   + 서로 다른 컴퓨터 프로그램들이 서로 다른 주소에서 서로를 호출하지만, 마치 같은 주소에서 호출하는 것처럼 작동하게 하는 원격 프로시져 프로토콜 → 프로그램들은 서로가 누구인지 알 필요 없이 정해진 방식대로 단순히 함수 호출만 하면 됨
@@ -18,12 +18,12 @@
 ▫️ google 사에서 개발한 protobuf라는 방식을 사용해 RPC라는 프로토콜을 데이터로 주고 받는 오픈소스 RPC 플랫폼
 ```
 
-<img src="https://user-images.githubusercontent.com/33214969/145026218-b272ef47-c4be-4915-8ce6-8c5a62b4a4b9.png" alt="grpc.png" style="zoom: 33%;" />
+<img src="https://user-images.githubusercontent.com/33214969/145026218-b272ef47-c4be-4915-8ce6-8c5a62b4a4b9.png" alt="grpc.png" width="50%" />
 
 + 특징
 
-  + 전송을 위해 TCP/IP 프로토콜과 `[HTTP 2.0](<https://www.notion.so/GRPC-67f85b527033436cbdfb485542dee775>)` 프로토콜을 사용함
-  + IDL(Interface Definition language)로 `[protocol buffer(protobuf)](<https://www.notion.so/GRPC-67f85b527033436cbdfb485542dee775>)`를 사용함 → IDL만 정의하면 높은 성능을 보장하는 서비스와 메세지에 대한 소스 코드가 각 언어에 맞게 자동 생성됨 → 개발자들은 사용 언어에 구애받지 않고 사용하기만 하면 됨
+  + 전송을 위해 TCP/IP 프로토콜과 `HTTP 2.0` 프로토콜을 사용함
+  + IDL(Interface Definition language)로 `protobuf(protocol buffer)`를 사용함 → IDL만 정의하면 높은 성능을 보장하는 서비스와 메세지에 대한 소스 코드가 각 언어에 맞게 자동 생성됨 → 개발자들은 사용 언어에 구애받지 않고 사용하기만 하면 됨
   + SSL/TLS를 사용하여 서버를 인증함 + 클라이언트 ↔ 서버 간에 교환되는 모든 데이터를 암호화함
   + 서버에서 클라이언트 응용 프로그램의 함수를 바로 호출 할 수 있음 → 분산 MSA를 쉽게 구현할 수 있음
   + 서버 측에서는 서버 인터페이스를 구현 + GRPC 서버를 실행 → 클라이언트 호출을 처리함
@@ -31,7 +31,7 @@
 
 + 지원 언어
 
-  <img src="https://user-images.githubusercontent.com/33214969/145026282-6477e9d3-2d42-4b36-acd2-2e43d0f8f080.png" alt="grpc_official_support.png" style="zoom: 30%;" />
+  <img src="https://user-images.githubusercontent.com/33214969/145026282-6477e9d3-2d42-4b36-acd2-2e43d0f8f080.png" alt="grpc_official_support.png" width="50%" />
 
 + 장점
 
@@ -77,7 +77,7 @@
 | 보안                 | 전송 (TLS)               | 전송 (TLS)                      |
 | 클라이언트 코드 생성 | O                        | OpenAPI + 타사 도구             |
 
-
+</br>
 
 ## HTTP 2.0(=HTTP/2)
 
@@ -92,7 +92,9 @@
   + header를 압축하여 중복 제거 후 전달함 → HTTP/1.1에 비해 훨씬 효율적임
   + 필요 시 클라이언트 요청 없이도 서버가 리소스를 전달할 수 있음 → 클라이언트 요청을 최소화 할 수 있음
 
-  ![http:2.png](https://user-images.githubusercontent.com/33214969/145026741-751be423-1134-47bc-bb6c-5f826d3c05b5.png)
+  <img src="https://user-images.githubusercontent.com/33214969/145026741-751be423-1134-47bc-bb6c-5f826d3c05b5.png" alt="http_2.png.png" width="30%" />
+
+</br>
 
 ## ProtoBuf(Protocol Buffer)
 
@@ -104,10 +106,8 @@
 
 + 아래와 같이 작성된 proto 파일이 protoc 컴파일러를 통해 각 언어로 소스 코드가 생성됨. 아래와 같은 예시로 protocol buffer가 선언되었고, 이는 통신하는 시점에 아래 이미지와 같이 인코딩되어 송수신됨 → 사이즈가 훨씬 작아짐
 
-  <img src="https://user-images.githubusercontent.com/33214969/145026773-23ab799a-7b2d-48bb-b51e-ca915a132a52.png" alt="porotobuf.png" style="zoom:70%;" />
+  <img src="https://user-images.githubusercontent.com/33214969/145026773-23ab799a-7b2d-48bb-b51e-ca915a132a52.png" alt="porotobuf.png" width="60%" />
 
-
-
-
+</br></br></br>
 
 [참고] https://grpc.io/docs/languages/go/, https://devjin-blog.com/golang-grpc-server-1/, https://velog.io/@kyusung/grpc-web-example, https://chacha95.github.io/2020-06-15-gRPC1/
