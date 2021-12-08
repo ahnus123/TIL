@@ -49,3 +49,27 @@
         $ sudo git commit -m ".gitignore 생성"    # commit
         $ sudo git push origin master    # push
         ```
+
+</br>
+
+## .gitignore 설정 예시
+
+```
+# 확장자별 무시 : *.(확장자명)
+*.a
+
+# 무시하지 않는 파일 : !(파일명).(확장자)
+!lib.a
+
+# 현재 디렉토리에 있는 파일은 무시 + 하위 디렉토리에 있는 파일은 무시하지 않음(ex. TODO는 무시, sub/TODO는 무시X)
+/TODO
+
+# 특정 디렉토리에 있는 모든 파일 무시 : (폴더명)/
+build/
+
+# 현재 위치의 특정 파일은 무시 + 하위 디렉토리에 있는 파일은 무시하지 않음(ex. doc/notes.txt 무시, sub/doc/notes.txt는 무시X)
+doc/*.txt
+
+# 특정 디렉토리 하위의 모든 .(확장자) 파일 무시
+doc/**/*.pdf
+```
