@@ -145,14 +145,16 @@
         - —proto_path : proto 파일 위치
         - —go-grpc_out=. : grpc 호환 코드(.pb.go)를 생성할 위치를 지정
 
-        <img src="https://user-images.githubusercontent.com/33214969/146026779-3424ab01-c5bc-4b4d-b957-784fd6f9663e.png" style="zoom:50%;" />
+        <img src="https://user-images.githubusercontent.com/33214969/146053011-1b9d512d-88a3-4c5f-92b3-f7eda2d4b236.png" style="zoom:50%;" />
+
+        + 'protoc-gen-go-grpc: program not found or is not executable Please specify a program using absolute path or make sure the program is available in your PATH system variable' 에러 발생 시 → GOPATH 확인 & protobuf plugin 재설치(b번)
 
      4. 컴파일이 완료된 후 `./pb` 폴더에 `user.pb.go`가 생성됨
 
-        <img src="https://user-images.githubusercontent.com/33214969/146026785-f51ddd9e-9b29-48da-ae4b-d119d6216ed5.png" style="zoom:50%;" />
+        <img src="https://user-images.githubusercontent.com/33214969/146053022-6977c0ce-2383-4cb5-b1a9-28c7229d9f38.png" style="zoom:50%;" />
 
      
 
      </br></br>
-
+     
      [참고] https://devjin-blog.com/golang-grpc-server-1/
