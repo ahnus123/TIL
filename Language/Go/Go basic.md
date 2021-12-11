@@ -10,6 +10,7 @@
 
   ```go
   var num int = 3
+  newVar := "newStr1"
   ```
 
 + 선언된 변수를 사용하지 않으면 -> ERROR 발생
@@ -18,12 +19,20 @@
 
 + default 값 - 숫자(0), bool(false), string("")
 
++ var 선언 시, 축약형으로 사용 가능함 - go언어가 알아서 var 타입 확인함
+
++ 한번 선언한 변수를 재할당 가능함
+
 + Go에서는 할당되는 값을 보고 그 타입을 추론하는게 가능함
 
 + Short Assignment Statement(`:=`)
 
   1. 함수(func) 내에서만 사용 가능
   2. 함수(func) 밖에서는 var를 사용해야 함
+
+[source code] [(go-study) part1.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part1.go)
+
+<br/>
 
 ## **2. 상수(Const)**
 
@@ -33,11 +42,17 @@
   const KEY string = "key"
   ```
 
++ `const`로 선언된 변수는 재할당(변경) 불가 + 축약형 코드(`:=`) 사용 불가
+
 + Go에서는 할당되는 값을 보고 그 타입을 추론하는게 가능함
 
 + 복수 상수 - 괄호 안에 상수들을 나열하여 사용
 
 + identifier `iota` - 상수 값을 0부터 순차적으로 부여
+
+[source code] [(go-study) part1.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part1.go)
+
+<br/>
 
 ## **3. Go 키워드**
 
@@ -45,13 +60,20 @@
 
   → break / case / chan / const / continue / default / defer / else / fallthrough / for / func / go / goto / if / import / interface / map / package / range / return / select / struct / swtich / type / var
 
+<br/>
+
 ## **4. Go Data Type**
 
++ `(a int, b int)` = `(a, b int)`
 + bool 타입 - bool
 + 문자열 타입 - string : 한 번 생성되면 수정될 수 없는 immutable 타입
 + 정수형 타입 - int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, uintptr
 + Float 및 복소수 타입 - float32, float64, complex64, complex128
 + 기타 - byte : uint8과 동일. 바이트 코드에 사용, rune : int32와 동일. 유니코드 코드포인트에 사용
+
+[source code] [(go-study) part1.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part1.go)
+
+<br/>
 
 ## **5. 문자열**
 
@@ -63,7 +85,56 @@
 
   ex) 문자열 안에 \n이 있을 경우 New Line으로 인식함
 
-## **6. 데이터 타입 변환(Type Conversion)**
+<br/>
+
+## **6. 포인터(Pointer)**
+
++ 포인터 : 메모리 주소를 값으로 가지는 타입/변수
+
++ 값은 메모리에 저장됨 + 변수는 일종의 alias임
+
++ 역참조 : 포인터가 가리키는 값을 가져오는 것. `*(변수명)`
+
++ 메모리 주소를 직접 대입하거나 or 포인터 연산을 허용하지 않음
+
++ 메모리 주소 출력 : `&(출력변수명)`
+
+  ```go
+  // Pointer1
+  a := 2
+  b := a
+  // Pointer2
+  a2 := 2
+  b2 := a2
+  a2 = 10
+  // Pointer3
+  a3 := 2
+  b3 := &a3
+  a3 = 10
+  // Pointer4
+  a4 := 2
+  b4 := &a4
+  *b4 = 20
+  
+  // main.go
+  fmt.Println(a, b)
+  fmt.Println(a2, b2)
+  fmt.Println(a3, b3)
+  fmt.Println(a3, *b3)
+  fmt.Println(a4, b4)
+  // Outputs
+  // 2 2
+  // 10 2
+  // 10 0xc0000b4028
+  // 10 10
+  // 20 0xc0000b4030
+  ```
+
+[source code] [(go-study) part1.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part1.go)
+
+<br/>
+
+## **7. 데이터 타입 변환(Type Conversion)**
 
 + 데이터 타입 변환 : 다른 데이터 타입으로 변환하기 위해 `T(v)`와 같이 표현함. 이 때 T는 변환하고자 하는 타입을 표시, v는 변환될 값(value)를 지정함
 
@@ -76,7 +147,11 @@
 
   ex) int에서 uint로 암묵적 변환이 일어나지 않음
 
-## **7. 연산자**
+[source code] [(go-study) part1.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part1.go)
+
+<br/>
+
+## **8. 연산자**
 
 ### **1) 산술연산자**
 
@@ -104,7 +179,11 @@
 + C++과 같이 & or * 를 사용하여 해당 변수의 주소를 얻어내거나 이를 반대로 Dereference할 때 사용함
 + 단, 포인터 산술(포인터에 더하고 빼는 기능)은 제공하지 않음
 
-## **8. 조건문**
+[source code] [(go-study) part1.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part1.go)
+
+<br/>
+
+## **9. 조건문**
 
 ### **1) if문**
 
@@ -136,22 +215,51 @@
   + switch 뒤에 expression 생략 가능
 
      - Go는 switch expression을 true로 생각하고 1번째 case문으로 이동하여 검사함
-
   + case문에 expression 사용 가능
-
+  
      - Go는 case문에 복잡한 expression을 가질 수 있음
-
   + no default fall through
 
      - Go는 break가 없어도 다음 case로 이동하지 않음
 
      - 다음 case문을 실행하려면 fallthrough문 명시 필요
-
   + type switch
-
+  
      - Go는 변수의 Type에 따라 case 분기가 가능함
+  
+  ```go
+  switch age {
+  case 10:
+  	return false
+  case 18:
+  	return true
+  }
+  return false
+  
+  switch {
+  case age < 18:
+  	return false
+  case age == 18:
+  	return true
+  case age > 50:
+  	return false
+  }
+  
+  // switch(+variable expression)
+  switch koreanAge := age + 2; koreanAge {
+  case 10:
+  	return false
+  case 18:
+  	return true
+  }
+  return false
+  ```
 
-## **9. 반복문**
+[source code] [(go-study) part1.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part1.go)
+
+<br/>
+
+## **10. 반복문**
 
 ### **1) for문**
 
@@ -188,6 +296,31 @@
 + `for 인덱스,요소값 := range 컬렉션` 형식
 
    - range 키워드 다음의 컬렉션으로부터 하나씩 요소를 리턴해서 그 요소의 위치 인덱스와 값을 for 키워드 다음의 2개의 변수에 각각 할당함
+   
+   ```go
+   // for, range, ...args
+   func superAdd(numbers ...int) int {
+   	//range : array에 loop를 적용
+   	for index, number := range numbers {
+   		fmt.Println(index, number)
+   	}
+   	return 1
+   }
+   
+   // Outputs
+   // 0 10 / 1 20 / 2 30 / 3 40 / 4 50
+   
+   //range(_ : index 사용하지 않을 때)
+   // -> for문 안에서만 작동함
+   func superAdd3(numbers ...int) int {
+   	total := 0
+   
+   	for _, number := range numbers {
+   		total += number
+   	}
+   	return total
+   }
+   ```
 
 ### **2) Break, continue, goto문**
 
@@ -213,9 +346,13 @@
 
 + goto문 : 기타 임의의 문장으로 이동
 
+[source code] [(go-study) part1.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part1.go)
+
+<br/>
+
 [참고] [http://golang.site/go/article/4-Go-변수와-상수]
 
-
+<br/><br/>
 
 # Go Programming(part2)
 
@@ -229,7 +366,74 @@
 
 + 함수는 패키지 안에 정의되며 호출되는 함수가 호출하는 함수의 반드시 앞에 위치해야 할 필요는 없음
 
-## **2. Pass By Value / Pass By Reference**
+[source code] [(go-study) part2.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part2.go)
+
+<br/>
+
+## 2. **Export / Private Function**
+
++ Private Function : 내부에서만 참조할 수 있는 함수 → 첫 문자를 **소문자**로 시작
+
++ Export Function : 외부에서 참조할 수 있는 함수 → 첫 문자를 **대문자**로 시작
+
+  + say.go 파일 생성, `export func` 생성
+
+    + say.go
+
+      ```go
+      package say
+      
+      import "fmt"
+      
+      // sayHi func
+      // - export 가능한 function -> 대문자로 시작(소문자는 불가)
+      // - private function임
+      func sayHi() {
+        fmt.Println("Hi")
+      }
+      
+      // SayHello func
+      // - export 가능한 function -> 대문자로 시작
+      func SayHello() {
+        fmt.Println("Hello")
+      }
+      ```
+
+  + export func 호출 - main.go에서 `SayHello()` 호출
+
+    + main.go
+
+      ```go
+      package main
+      
+      import (
+        "fmt"
+        "test/say"
+      )
+      
+      func main() {
+        fmt.Println("Hello World!")
+        say.SayHello()    // export func인 SayHello() 호출
+        // say.sayHi()    // 소문자로 시작하는 export func은 실행 불가
+      }
+      ```
+
+    + main.go 실행
+
+      ```bash
+      # terminal(/test)
+      > go run main.go
+      
+      # Outputs
+      Hello World!
+      Hello
+      ```
+
+[source code] [(go-study) part2.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part2.go)
+
+<br/>
+
+## **3. Pass By Value / Pass By Reference**
 
 + 파라미터 전달방식 - Pass By Value / Pass By Reference
 
@@ -275,9 +479,17 @@
   }
   ```
 
-## **3. Variadic Function(가변인자함수)**
+[source code] [(go-study) part2.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part2.go)
+
+<br/>
+
+## **4. Variadic Function(가변인자함수)**
 
 + variadic function : 함수에 고정된 수의 파라미터들을 전달하지 않고 다양한 숫자의 파라미터를 전달하는 함수
+
+  +  원하는 개수만큼의 arguments를 주고 받을 수 있음
+  + argument 타입 앞에 ... 붙이기
+  + [arg1 arg2 arg3 ...]와 같이 array 형태로 출력됨
 
 + 형식 : `func (함수명) ( (파라미터명) ...(파라미터타입) ) { ... }`
 
@@ -296,9 +508,15 @@
   }
   ```
 
-## **4. 함수 리턴값**
+[source code] [(go-study) part2.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part2.go)
 
-+ Go는 함수 리턴값이 0개, 1개, n개 일 수 있음
+<br/>
+
+## **5. 함수 리턴값**
+
++ Multiple return : Go는 함수 리턴값이 0개, 1개, n개 일 수 있음
+
+  + return할 type을 () 안에 명시
 
   ```go
   func main() {
@@ -332,7 +550,33 @@
   }
   ```
 
-## **5. 익명함수(Anonymous Funciton)**
++ naked return : return할 변수를 명시하지 않는 것
+
+  + func 함수 생성 시 return 부분에 변수와 타입을 함께 명시 -> 자동으로 이때의 변수가 return됨
+
+  ```go
+  // Naked Return
+  func lenAndUpper2(name string) (length int, uppercase string) {
+  	length = len(name) //변수 값 업데이트
+  	uppercase = strings.ToUpper(name)
+  	return
+  }
+  ```
+
+  ```go
+  // main.go
+  totalLength2, upperName2 := lenAndUpper2("test2")
+  fmt.Println(totalLength2, upperName2)
+  
+  // Outputs
+  // 5 TEST2
+  ```
+
+[source code] [(go-study) part2.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part2.go)
+
+<br/>
+
+## **6. 익명함수(Anonymous Funciton)**
 
 + 익명함수 : 함수명을 갖지 않는 함수. 일반적으로 그 함수 전체를 변수에 할당 or 다른 함수의 파라미터에 직접 정의되어 사용됨
 
@@ -351,7 +595,11 @@
   }
   ```
 
-## **6. 일급함수**
+[source code] [(go-study) part2.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part2.go)
+
+<br/>
+
+## **7. 일급함수**
 
 + Go언어에서 함수는 일급함수로서 Go의 기본 타입과 동일하게 취급됨
 
@@ -385,7 +633,11 @@
   }
   ```
 
-## **7. type문을 사용한 함수 원형 정의**
+[source code] [(go-study) part2.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part2.go)
+
+<br/>
+
+## **8. type문을 사용한 함수 원형 정의**
 
 + 구조체(struct), 인터페이스 등 Custom Type(or User Defined Type)을 정의하기 위해 사용됨
 
@@ -404,7 +656,11 @@
   }
   ```
 
-## **8. 클로저(Closure)**
+[source code] [(go-study) part2.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part2.go)
+
+<br/>
+
+## **9. 클로저(Closure)**
 
 + Closure : 함수 바깥에 있는 변수를 참조하는 함수 값(function value). 이때의 함수는 바깥의 변수를 마치 함수 안으로 끌어들인 듯이 그 변수를 읽거나 쓸 수 있게 됨
 
@@ -433,12 +689,15 @@
   ```
 
    - nextValue()는 int를 리턴하는 익명함수(func() int)를 리턴하는 함수(Go언어는 함수를 다른 함수로부터 리턴되는 리턴 값으로 사용 가능)
+ - 이 익명함수가 그 함수 바깥에 있는 변수 i 를 참조하고 있음. 익명함수 자체가 로컬 변수로 i 를 갖는 것이 아니기 때문에 외부 변수 i 가 상태를 계속 유지하는 즉, 값을 계속 하나씩 증가시키는 기능을 함
 
-   - 이 익명함수가 그 함수 바깥에 있는 변수 i 를 참조하고 있음. 익명함수 자체가 로컬 변수로 i 를 갖는 것이 아니기 때문에 외부 변수 i 가 상태를 계속 유지하는 즉, 값을 계속 하나씩 증가시키는 기능을 함
+[source code] [(go-study) part2.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part2.go)
+
+<br/>
 
 [참고] [http://golang.site/go/article/9-Go-함수]
 
-
+<br/><br/>
 
 # Go Programming(part3)
 
@@ -446,11 +705,13 @@
 
 ### **1) 배열**
 
-+ 배열 : 연속적인 메모리 공간에 동일한 타임의 데이터를 순서대로 저장하는 자료구조
++ 배열 : 연속적인 메모리 공간에 동일한 타입의 데이터를 순서대로 저장하는 자료구조
+
+  + Go에서 Array는 꼭 길이를 명시해줘야 함
 
 + 인덱스 - Zero based array(0, 1, 2, ... 순서대로 인덱스를 매김)
 
-+ 선언 : `var (변수명) [ (배열크기) ] (데이터타입)`
++ 선언 : `var (변수명) [(배열크기)](데이터타입)`
 
   ```go
   var num [3]int
@@ -462,7 +723,7 @@
 
 + 초기화 - 배열을 정의할 때, 초기값 설정 가능
 
-  `[ (배열크기) ] (데이터타입) { (초기값1, 초기값2, ...) }`
+  `[(배열크기)] (데이터타입) {(초기값1, 초기값2, ...)}`
 
   + `[...]` : 배열 크기 생략. 자동으로 초기화 요소 개수만큼 크기가 정해짐
 
@@ -489,13 +750,17 @@
   }
   ```
 
+[source code] [(go-study) part3.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part3.go)
+
+<br/>
+
 ## **2. 슬라이스(Slice)**
 
 ### **1) 슬라이스**
 
 + 슬라이스 : 배열과 달리 고정된 크기를 미리 지정하지 않을 수 있고, 차후 그 크기를 동적으로 변경할 수도 있음 + 부분 배열을 발췌할 수도 있음
 
-+ 선언 : `var (변수명) [] (타입)`
++ 선언 : `var (변수명) [](타입)`
 
   ```go
   var s []int //선언
@@ -533,7 +798,7 @@
 
 + 부분 슬라이스 : 슬라이스에서 일부를 발췌하여 생성
 
-+ 형식 : `(슬라이스명)[ (처음인덱스) : (마지막인덱스) ]`
++ 형식 : `(슬라이스명)[(처음인덱스):(마지막인덱스)]`
 
 + inclusive : 처음 인덱스, exclusive : 마지막 인덱스
 
@@ -554,7 +819,9 @@
 
 + append() : 슬라이스에 새로운 요소 추가
 
-+ 형식 : `append( (슬라이스객체), (추가할요소의값1), (추가할요소의값2), ... )`
++ 형식 : `(새로운 변수) = append((기존의 슬라이스객체), (추가할요소의값1), (추가할요소의값2), ...)`
+
+  +  (새로운 변수에는 추가할 값이 추가된 slice를 반환함. 기존의 슬라이스 객체는 변경되지 않음)
 
   ```go
   s := []int{0, 1}	//[0 1]
@@ -597,10 +864,12 @@
 + 처음 슬라이드가 생성될 때, (만약 길이, 용량이 지정되었다면) 내부적으로 용량(capacity)만큼의 매열을 생성
 
    - 슬라이드 1번째 필드에 그 배열의 처음 메모리 위치를 지정
-
    - 2번째 길이 필드는 지정된 (첫 배열요소로부터의) 길이를 갖게 되고
-
    - 3번째 용량 필드는 전체 배열 크기를 가짐
+
+[source code] [(go-study) part3.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part3.go)
+
+<br/>
 
 ## **3. Map**
 
@@ -608,7 +877,7 @@
 
 + Map : 키(Key)에 대응하는 값(Value)을 신속하게 찾는 해시테이블(Hash table)을 구현한 자료구조
 
-+ 선언 : `map[ (Key타입) ] (Value타입)`
++ 선언 : `map[(Key타입)] (Value타입)`
 
   + Nil Map : 이때 선언된 변수는 nill 값을 갖음. 이때의 Map. 초기화 전에는 어떤 데이터도 쓸 수 없음
 
@@ -618,7 +887,7 @@
 
      - map value : 내부적으로 runtime.hmap 구조체를 가리키는 포인터. (idMap 변수는 이 해시테이블을 가리키는 map을 가리킴)
 
-  + 리터럴(literal)로 초기화 : `map[ (Key타입) ] (Value타입) { (key) : (value) }`
+  + 리터럴(literal)로 초기화 : `map[(Key타입)] (Value타입) {(key):(value)}`
 
   ```go
   var idMap map[int]string	//선언
@@ -632,9 +901,9 @@
 
 ### **2) Map 값 할당**
 
-+ 값 할당 : `(map변수) [ (key) ] = (값)`
++ 값 할당 : `(map변수)[(key)] = (값)`
 
-+ 값 삭제 : `delete( (map변수), (key) )`
++ 값 삭제 : `delete((map변수), (key))`
 
   ```go
   var m map[int]string
@@ -652,7 +921,7 @@
 
 ### **3) Map key 체크**
 
-+ map 안에 특정 키가 존재하는지 체크 : (map변수) [ (key) ]
++ map 안에 특정 키가 존재하는지 체크 : `(map변수)[(key)]`
 
    - 리턴 값 2개 : 키에 상응하는 값, 그 키가 존자해는지 아닌지를 나타내는 bool
 
@@ -681,9 +950,13 @@
   }
   ```
 
+[source code] [(go-study) part3.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part3.go)
+
+<br/>
+
 [참고] [http://golang.site/go/article/12-Go-컬렉션---배열]
 
-
+<br/><br/>
 
 # Go Programming(part4)
 
@@ -797,6 +1070,10 @@
 
   - GOROOT > GOPATH 순서대로 패키지를 찾음
 
+[source code] [(go-study) part4.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part4.go)
+
+<br/>
+
 ## **2. 구조체(Struct)**
 
 + 구조체 : 필드들의 집합체 / 컨테이너. Custom Data Type을 표현하는데 사용됨.
@@ -874,6 +1151,10 @@
   }
   ```
 
+[source code] [(go-study) part4.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part4.go)
+
+<br/>
+
 ## **3. Go 메소드(Method)**
 
 + Go 메소드 - 특별한 형태의 func 함수. 함수 정의에서 func 키워드와 함수명 사이에 "그 함수가 어떤 struct를 위한 메소드인지"를 표시함.
@@ -918,6 +1199,10 @@
   	area := rect.area2()	// 220
   }
   ```
+
+[source code] [(go-study) part4.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part4.go)
+
+<br/>
 
 ## **4. Go 인터페이스(interface)**
 
@@ -1010,6 +1295,10 @@
   }
   ```
 
+[source code] [(go-study) part4.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part4.go)
+
+<br/>
+
 ## **5. 에러처리**
 
 + Go는 내장 타입으로 error라는 인터페이스 타입을 갖음
@@ -1057,15 +1346,22 @@
   }
   ```
 
+[source code] [(go-study) part4.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part4.go)
+
+<br/>
+
 [참고] [http://golang.site/go/article/15-Go-패키지]
 
-
+<br/><br/>
 
 # Go Programming(part5)
 
 ## **1. Go defer**
 
-+ defer : 특정 문장 or 함수를 나중에 (deferf를 호출하는 함수가 리턴하기 직전에) 실행하게 함
++ defer : func 종료 후 실행되는 코드/기능
+
+  + 특정 문장 or 함수를 나중에 (defer를 호출하는 함수가 리턴하기 직전에) 실행하게 함
+  + defer를 사용하면 func이 끝난 뒤 필요한 것을 실행시킬 수 있음    ex) 오픈했던 이미지 닫기, 생성한 파일 삭제, API 요청 보내기, ...
 
 + 일반적으로는 C#, Java 같은 언어에서의 finally 블럭처럼 마지막에 Clean-up 작업을 위해 사용됨
 
@@ -1087,6 +1383,10 @@
   ```
 
    - 파일을 Open한 후 항상 파일을 close 함
+
+[source code] [(go-study) part5.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part5.go)
+
+<br/>
 
 ## **2. panic()**
 
@@ -1111,6 +1411,10 @@
     defer f.Close()
   }
   ```
+
+[source code] [(go-study) part5.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part5.go)
+
+<br/>
 
 ## **3. recover()**
 
@@ -1144,6 +1448,10 @@
   ```
 
    - recover()가 panic 상태를 제거하고 openFile()의 다음 문장인 println()을 호출함
+
+[source code] [(go-study) part5.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part5.go)
+
+<br/>
 
 ## **4. Go루틴(goroutine)**
 
@@ -1246,6 +1554,10 @@
    - In programming, concurrency is the composition of independently executing processes, while parallelism is the simultaneous execution of (possibly related) computations. Concurrency is about dealing with lots of things at once. Parallelism is about doing lots of things at once.
 
   (프로그래밍에서 동시성은 독립적으로 실행되는 프로세스의 구성이고 병렬성은 (아마 관련이있는) 계산의 동시 실행입니다. 동시성은 한 번에 많은 것을 처리하는 것입니다. 병렬 처리는 한 번에 많은 작업을 수행하는 것입니다)
+
+[source code] [(go-study) part5.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part5.go)
+
+<br/>
 
 ## **5. Go 채널**
 
@@ -1476,5 +1788,9 @@
    - done2 채널 case문에 break EXIT이 있는데, 이 문장으로 인해 for문을 빠져나와 EXIT 레이블로 이동함
 
 + Go의 `break 레이블` 문 - 해당 레이블로 이동한 후 자신이 빠져나온 루프 다음 문장을 실행함(C/C# 등의 언어에서의 goto 문과 다름)
+
+[source code] [(go-study) part5.go](https://github.com/Sunha03/go-study/blob/master/src/study/basic/part5.go)
+
+<br/>
 
 [참고] [http://golang.site/go/article/20-Go-defer와-panic]
