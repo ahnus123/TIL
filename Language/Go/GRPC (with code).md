@@ -151,10 +151,171 @@
 
      4. 컴파일이 완료된 후 `./pb` 폴더에 `user.pb.go`가 생성됨
 
-        <img src="https://user-images.githubusercontent.com/33214969/146053022-6977c0ce-2383-4cb5-b1a9-28c7229d9f38.png" style="zoom:50%;" />
+        <img src="https://user-images.githubusercontent.com/33214969/146053022-6977c0ce-2383-4cb5-b1a9-28c7229d9f38.png" style="zoom:33%;" />
 
+     5. 정의한 protobuf로 GRPC 서버 구현
+
+     + `user.proto`를 사용하여 user service를 담당하는 GRPC 서버를 구현
      
-
+       + user 데이터 셋팅 - DB 조회 대신 static 선언으로 대체
+     
+         ```go
+         // data/user.go
+         package data
+         
+         import (
+         	userpb "grpcserver/pb"
+         )
+         
+         var UserData = []*userpb.UserMessage {
+         	{
+         		UserId: "1",
+         		Name: "Henry",
+         		PhoneNumber: "01012341234",
+         		Age: 20,
+         	},
+         	{
+         		UserId: "2",
+         		Name: "Micheal",
+         		PhoneNumber: "01056785678",
+         		Age: 21,
+         	},
+         	{
+         		UserId: "3",
+         		Name: "Jessie",
+         		PhoneNumber: "01090129012",
+         		Age: 22,
+         	},
+         	{
+         		UserId: "4",
+         		Name: "Max",
+         		PhoneNumber: "01045129012",
+         		Age: 23,
+         	},
+         	{
+         		UserId: "5",
+         		Name: "Tony",
+         		PhoneNumber: "01012345678",
+         		Age: 24,
+         	}
+         }
+         ```
+     
+       + `user.proto`를 사용하여 user service를 담당하는 GRPC 서버를 구현
+     
+         ```go
+         // main.go
+         type userServer struct {
+         	userpb.UserServer
+         }
+         
+         func main() {
+         	...
+         	grpcServer := grpc.NewServer()		// User service를 GRPC server에 등록
+         	userpb.RegisterUserServer(grpcServer, &userServer{})
+         	...
+         }
+         ```
+     
+         + GRPC 서버에 정의한 User 서비스를 사용하도록 만드는 함수가 이미 컴파일된 `user_grpc.pb.go` 파일에 존재함 → `RegisterUserServer` 함수를 가져와서 User 서비스를 등록하면 됨 ⇒ user 서비스를 담당하는 GRPC 서버 생성 완료
+     
+       + `user.proto`에 정의한 RPC 구현
+     
+         ```go
+         // main.go
+         // GetUser : user 상세 조회
+         func (s *userServer) GetUser(ctx context.Context, req *userpb.GetUserRequest) (*userpb.GetUserResponse, error) {
+         	userId := req.UserId
+         
+         	var userMessage *userpb.UserMessage
+         	for _, u := range data.Users {
+         		if u.UserId != userId {
+         			continue
+         		} else {
+         			userMessage = u
+         			break
+         		}
+         	}
+         
+         	return &userpb.GetUserResponse {
+         		UserMessage: userMessage,
+         	}, nil
+         }
+         
+         // ListUsers : user 리스트 조회
+         func (s *userServer) ListUsers(ctx context.Context, req *userpb.ListUsersRequest) (*userpb.ListUsersResponse, err) {
+         	userMessages := make([]*userpb.UserMessage, len(data.Users))
+         	for i, user := rangee data.Users {
+         		userMessages[i] = u
+         	}
+         
+         	return &userpb.ListUsersResponse {
+         		UserMessages: userMessages,
+         	}, nil
+         }
+         ```
+     
+     6. GRPC 서버 작동 확인
+     
+        - GRPC 서버는 HTTP API와 같이 `localhost:8000/users/:user_id`와 같은 curl or Postman으로 확인할 수 없음 → GRPC 서버로 curl할 수 있는 툴 설치 필요
+     
+          + [grpccurl](https://github.com/fullstorydev/grpcurl) : cli 툴
+     
+          + [bloomrpc](https://github.com/bloomrpc/bloomrpc) : gui 툴
+     
+        + bloomrpc 툴을 사용하여 GRPC 서버 작동 확인
+     
+          1. bloomrpc 설치 및 빌드
+     
+             ```bash
+             # bloomrpc 설치
+             $ brew install --cask bloomrpc
+             
+             # bloomrpc 빌드
+             $ git clone <https://github.com/uw-labs/bloomrpc.git>
+             $ cd bloomrpc
+             $ yarn install && ./node_modules/.bin/electron-rebuild
+             $ npm run package
+             ```
+     
+             <img src="https://user-images.githubusercontent.com/33214969/146380738-8d543111-2cfb-4238-a42e-b7e7d2fd709e.png" alt="grpc-bloomrpc1.png" style="zoom:50%;" />
+     
+             <img src="https://user-images.githubusercontent.com/33214969/146380753-91a7578f-c27f-48b3-9f2a-b9a835cd324f.png" alt="grpc-bloomrpc2.png" style="zoom:50%;" />
+     
+          2. bloomrpc 실행
+     
+             ```bash
+             $ cd bloomrpc
+             
+             # 아래 명령어 2개는 2개의 터미널에서 각각 실행
+             $ npm run start-server-dev
+             $ npm run start-main-dev
+             ```
+     
+             <img src="https://user-images.githubusercontent.com/33214969/146380763-e4f85bac-a467-4606-89b2-c43af722b7e8.png" alt="grpc-bloomrpc3.png"  />
+     
+             <img src="https://user-images.githubusercontent.com/33214969/146380764-3dc112ef-1b67-4d18-8fed-e8930537e1b0.png" alt="grpc-bloomrpc4.png" style="zoom:50%;" />
+     
+             <img src="https://user-images.githubusercontent.com/33214969/146380769-73b302ab-334d-4ac2-9150-1bd126b94355.png" alt="grpc-bloomrpc5.png" style="zoom: 33%;" />
+     
+          3. proto 파일 import하기
+     
+             <img src="https://user-images.githubusercontent.com/33214969/146380770-45d9cd8a-a594-4cb7-a231-d88cfbd82493.png" alt="grpc-bloomrpc6.png" style="zoom: 33%;" />
+     
+          4. GRPC 서버 실행 후 RPC 실행
+     
+             + GRPC 서버 실행
+     
+               <img src="https://user-images.githubusercontent.com/33214969/146380771-ec4c16fd-b00e-4b2c-827c-b1a7fceb6178.png" alt="grpc-bloomrpc7.png" style="zoom:50%;" />
+     
+             + RPC 실행
+     
+             + (bloomrpc) RPC 클릭 → 자동으로 request를 보낼 수 있는 형식으로 포맷을 변경시켜줌 + request 형식에 맞게 데이터를 보내면 response를 출력
+     
+               <img src="https://user-images.githubusercontent.com/33214969/146380774-3ec5c40a-f97b-4e48-9a69-3d0fabe01123.png" alt="grpc-bloomrpc8.png" style="zoom: 33%;" />
+     
+               <img src="https://user-images.githubusercontent.com/33214969/146380779-611b27f5-a938-4a35-bfb9-d5518b476a1b.png" alt="grpc-bloomrpc9.png" style="zoom: 33%;" />
+     
      </br></br>
      
      [참고] https://devjin-blog.com/golang-grpc-server-1/
