@@ -49,7 +49,7 @@
    }
    ```
 
-   <img src="https://user-images.githubusercontent.com/33214969/146026614-5c38b022-5280-4df6-acf4-6ef8c538bae5.png" width="50%" />
+   <img src="https://user-images.githubusercontent.com/33214969/146026614-5c38b022-5280-4df6-acf4-6ef8c538bae5.png" width="70%" />
 
    1. net 표준 라이브러리 패키지([net package](https://pkg.go.dev/net))를 이용해 어떤 네트워크에 어떤 port 번호로 서버를 실행할지 정의함
    2. import한 grpc 모듈([google.golang.org/grpc](https://pkg.go.dev/google.golang.org/grpc)) 모듈에서 `NewServer()`함수를 호출하여 GRPC 서버 구현
@@ -122,9 +122,9 @@
              $ protoc --version
              ```
 
-             <img src="https://user-images.githubusercontent.com/33214969/146026632-b4db933c-f06a-4bb8-8509-967abe806256.png" width="50%" />
+             <img src="https://user-images.githubusercontent.com/33214969/146026632-b4db933c-f06a-4bb8-8509-967abe806256.png" width="70%" />
 
-             <img src="https://user-images.githubusercontent.com/33214969/146026771-df3e5949-576e-495f-a150-97ae1de9d9e9.png" width="50%" />
+             <img src="https://user-images.githubusercontent.com/33214969/146026771-df3e5949-576e-495f-a150-97ae1de9d9e9.png" width="70%" />
 
           2. https://developers.google.com/protocol-buffers/docs/downloads
 
@@ -151,7 +151,7 @@
 
      4. 컴파일이 완료된 후 `./pb` 폴더에 `user.pb.go`가 생성됨
 
-        <img src="https://user-images.githubusercontent.com/33214969/146053022-6977c0ce-2383-4cb5-b1a9-28c7229d9f38.png" width="10%" />
+        <img src="https://user-images.githubusercontent.com/33214969/146053022-6977c0ce-2383-4cb5-b1a9-28c7229d9f38.png" width="30%" />
 
      5. 정의한 protobuf로 GRPC 서버 구현
 
@@ -278,9 +278,9 @@
              $ npm run package
              ```
      
-             <img src="https://user-images.githubusercontent.com/33214969/146380738-8d543111-2cfb-4238-a42e-b7e7d2fd709e.png" alt="grpc-bloomrpc1.png" width="50%" />
+             <img src="https://user-images.githubusercontent.com/33214969/146380738-8d543111-2cfb-4238-a42e-b7e7d2fd709e.png" alt="grpc-bloomrpc1.png" width="70%" />
      
-             <img src="https://user-images.githubusercontent.com/33214969/146380753-91a7578f-c27f-48b3-9f2a-b9a835cd324f.png" alt="grpc-bloomrpc2.png" width="50%" />
+             <img src="https://user-images.githubusercontent.com/33214969/146380753-91a7578f-c27f-48b3-9f2a-b9a835cd324f.png" alt="grpc-bloomrpc2.png" width="70%" />
      
           2. bloomrpc 실행
      
@@ -294,9 +294,9 @@
      
              <img src="https://user-images.githubusercontent.com/33214969/146380763-e4f85bac-a467-4606-89b2-c43af722b7e8.png" alt="grpc-bloomrpc3.png" />
      
-             <img src="https://user-images.githubusercontent.com/33214969/146380764-3dc112ef-1b67-4d18-8fed-e8930537e1b0.png" alt="grpc-bloomrpc4.png" width="50%" />
+             <img src="https://user-images.githubusercontent.com/33214969/146380764-3dc112ef-1b67-4d18-8fed-e8930537e1b0.png" alt="grpc-bloomrpc4.png" width="70%" />
      
-             <img src="https://user-images.githubusercontent.com/33214969/146380769-73b302ab-334d-4ac2-9150-1bd126b94355.png" alt="grpc-bloomrpc5.png" width="50%" />
+             <img src="https://user-images.githubusercontent.com/33214969/146380769-73b302ab-334d-4ac2-9150-1bd126b94355.png" alt="grpc-bloomrpc5.png" width="70%" />
      
           3. proto 파일 import하기
      
@@ -306,15 +306,15 @@
      
              + GRPC 서버 실행
      
-               <img src="https://user-images.githubusercontent.com/33214969/146380771-ec4c16fd-b00e-4b2c-827c-b1a7fceb6178.png" alt="grpc-bloomrpc7.png" width="50%" />
+               <img src="https://user-images.githubusercontent.com/33214969/146380771-ec4c16fd-b00e-4b2c-827c-b1a7fceb6178.png" alt="grpc-bloomrpc7.png" width="70%" />
      
              + RPC 실행
      
              + (bloomrpc) RPC 클릭 → 자동으로 request를 보낼 수 있는 형식으로 포맷을 변경시켜줌 + request 형식에 맞게 데이터를 보내면 response를 출력
      
-               <img src="https://user-images.githubusercontent.com/33214969/146380774-3ec5c40a-f97b-4e48-9a69-3d0fabe01123.png" alt="grpc-bloomrpc8.png" width="50%" />
+               <img src="https://user-images.githubusercontent.com/33214969/146380774-3ec5c40a-f97b-4e48-9a69-3d0fabe01123.png" alt="grpc-bloomrpc8.png" width="70%" />
      
-               <img src="https://user-images.githubusercontent.com/33214969/146380779-611b27f5-a938-4a35-bfb9-d5518b476a1b.png" alt="grpc-bloomrpc9.png" width="50%" />
+               <img src="https://user-images.githubusercontent.com/33214969/146380779-611b27f5-a938-4a35-bfb9-d5518b476a1b.png" alt="grpc-bloomrpc9.png" width="70%" />
      
      </br></br>
      
